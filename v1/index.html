@@ -3,97 +3,111 @@
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-  <meta charset="utf-8">
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
-  <!-- Uncomment this line if you want to dataTool extension
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+    <!-- Uncomment this line if you want to dataTool extension
   <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/extension/dataTool.min.js"></script>
   -->
-  <!-- Uncomment this line if you want to use gl extension
+    <!-- Uncomment this line if you want to use gl extension
   <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
   -->
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
-  <!-- Uncomment this line if you want to echarts-stat extension
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+    <!-- Uncomment this line if you want to echarts-stat extension
   <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
   -->
-  <!-- Uncomment this line if you want to use map
+    <!-- Uncomment this line if you want to use map
   <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/china.js"></script>
   <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
   -->
-  <!-- Uncomment these two lines if you want to use bmap extension
+    <!-- Uncomment these two lines if you want to use bmap extension
   <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
   <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/extension/bmap.min.js"></script>
   -->
-  <style>
-    body{
-      overflow-y: hidden;
-      overflow-x: hidden;
-      height: 100vh; width:100vw;margin: 0;user-select: none;
-    }
-    #info{
-      position: fixed;
-    z-index: 9999;
-    width: 300px;
-    color: white;
-    max-height: 80vh;
-    outline: 1px solid #828282;
-    top: 8px;
-    left: 8px;
-    background-color: #000000;
-    padding: 12px;
-    font-size: 12px;
-    line-height: 20px;
-    overflow: scroll;
-    }
-    .hashtag{
-      background-color: #4f4f4f;
-    color: yellow;
-    padding: 2px;
-    margin: 2px;
-    display: inline-block;
-    margin-top: 14px;
-    font-weight: 600;
-    }
-    .link-of-topic{
-      color: aquamarine;
-      text-decoration: none;
-      font-weight: 300;
-      /* background-color: blue; */
-      padding: 1px 6px;
-      /* margin-right: 0; */
-      display: initial;
-    }
-    a{
-      color: cyan;
-      text-decoration: none;
-    }
-  </style>
+    <style>
+        body {
+            overflow-y: hidden;
+            overflow-x: hidden;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            user-select: none;
+        }
+        
+        #info {
+            position: fixed;
+            z-index: 9999;
+            width: 300px;
+            color: white;
+            max-height: 80vh;
+            outline: 1px solid #828282;
+            top: 8px;
+            left: 8px;
+            background-color: #000000;
+            padding: 12px;
+            font-size: 12px;
+            line-height: 20px;
+            overflow: scroll;
+        }
+        
+        #info::-webkit-scrollbar {
+            width: 0 !important;
+            display: none;
+        }
+        
+        .hashtag {
+            background-color: #4f4f4f;
+            color: yellow;
+            padding: 2px;
+            margin: 2px;
+            display: inline-block;
+            margin-top: 14px;
+            font-weight: 600;
+        }
+        
+        .link-of-topic {
+            color: aquamarine;
+            text-decoration: none;
+            font-weight: 300;
+            /* background-color: blue; */
+            padding: 1px 6px;
+            /* margin-right: 0; */
+            display: initial;
+        }
+        
+        a {
+            color: cyan;
+            text-decoration: none;
+        }
+    </style>
 </head>
-<body  >
-  <div id="container" style="height: 100vh;width:100vw;"></div>
-  <div id="info"></div>
-  
-  <script type="text/javascript">
-    var dom = document.getElementById('container');
-    var myChart = echarts.init(dom, 'dark', {
-      renderer: 'canvas',
-      useDirtyRect: false
-    });
-    var app = {};
-    var ROOT_PATH = 'https://echarts.apache.org/examples';
-    var option;
 
-    function loadScript(scriptUrl, cb) {
-      var scriptTag = document.createElement('script');
-      scriptTag.onload = cb;
-      scriptTag.src = scriptUrl;
-      document.body.appendChild(scriptTag);
-    }
-loadScript(
-  'https://fastly.jsdelivr.net/npm/echarts-graph-modularity@2.0.0/dist/echarts-graph-modularity.min.js',
-    function () {
-      let _TAGS_EXCLUDE=`
+<body>
+    <div id="container" style="height: 100vh;width:100vw;"></div>
+    <div id="info"></div>
+
+    <script type="text/javascript">
+        var dom = document.getElementById('container');
+        var myChart = echarts.init(dom, 'dark', {
+            renderer: 'canvas',
+            useDirtyRect: false
+        });
+        var app = {};
+        var ROOT_PATH = 'https://echarts.apache.org/examples';
+        var option;
+
+        function loadScript(scriptUrl, cb) {
+            var scriptTag = document.createElement('script');
+            scriptTag.onload = cb;
+            scriptTag.src = scriptUrl;
+            document.body.appendChild(scriptTag);
+        }
+        loadScript(
+            'https://fastly.jsdelivr.net/npm/echarts-graph-modularity@2.0.0/dist/echarts-graph-modularity.min.js',
+            function() {
+                let _TAGS_EXCLUDE = `
       2020
       学习资料
       开源
@@ -104,198 +118,197 @@ loadScript(
       资料
       趋势
       `;
-      _TAGS_EXCLUDE=Array.from(_TAGS_EXCLUDE.trim().split('\n'),t=>t.trim()).filter(res=>res);
-      // Reinit chart again
-      // TODO: visual encoding registerion must been done before echarts.init.
-      var dom = myChart.getDom();
-      myChart.dispose();
-      myChart = echarts.init(dom);
-      $.getJSON('1658738901000.json', function (data) {
-        var nodes = Array.from(data.nodes,n=>{
-          // if(_TAGS_EXCLUDE.includes(n.name))return;
-          let node={
-            id:n.index.toString(),
-            name:n.name,
-            value:n.group*10,
-            data:n.data
-          }
-          // console.log(n.index)
-          return node;
-        })
-        // .filter(res=>res);
+                _TAGS_EXCLUDE = Array.from(_TAGS_EXCLUDE.trim().split('\n'), t => t.trim()).filter(res => res);
+                // Reinit chart again
+                // TODO: visual encoding registerion must been done before echarts.init.
+                var dom = myChart.getDom();
+                myChart.dispose();
+                myChart = echarts.init(dom);
+                $.getJSON('1658738901000.json', function(data) {
+                    var nodes = Array.from(data.nodes, n => {
+                            // if(_TAGS_EXCLUDE.includes(n.name))return;
+                            let node = {
+                                    id: n.index.toString(),
+                                    name: n.name,
+                                    value: n.group * 10,
+                                    data: n.data
+                                }
+                                // console.log(n.index)
+                            return node;
+                        })
+                        // .filter(res=>res);
 
-        nodes.forEach(function (node) {
-          // if (node.value > 100) {
-          node.emphasis = {
-            label: {
-              show: true,
-              fontSize: 20,
-            }
-          };
-          // }
-          node.label={
-            // show:true,
-            show:node.value > 10 && !_TAGS_EXCLUDE.includes(node.name),
-            fontSize: 10,
-            fontFamily: 'Microsoft YaHei',
-            borderColor: '#449933',
-            borderRadius: 4
-          }
-          
-        });
+                    nodes.forEach(function(node) {
+                        // if (node.value > 100) {
+                        node.emphasis = {
+                            label: {
+                                show: true,
+                                fontSize: 20,
+                            }
+                        };
+                        // }
+                        node.label = {
+                            // show:true,
+                            show: node.value > 10 && !_TAGS_EXCLUDE.includes(node.name),
+                            fontSize: 10,
+                            fontFamily: 'Microsoft YaHei',
+                            borderColor: '#449933',
+                            borderRadius: 4
+                        }
 
-        var edges = data.links;
-        edges= Array.from(edges,e=>{
-          e.target=e.target.toString();
-          e.source=e.source.toString();
-          return e;
-        });
-        // edges= Array.from(edges,e=>{
-        //   // if(e.targetName=='AR') console.log(e)
-        //   if(_TAGS_EXCLUDE.includes(e.targetName))return;
-        //   if(_TAGS_EXCLUDE.includes(e.sourceName))return;
-        //   return e;
-        // }).filter(res=>res);
-        
-//         nodes=[{
-//     "name": "mocha",
-//     "value": 89055,
-//     "emphasis": {
-//         "label": {
-//             "show": true
-//         }
-//     },
-//     "label": {
-//         "show": true
-//     }
-// }]
-//   edges=[{source:0,target:188}]
+                    });
 
-      // 打乱
-       const shuffle= (arr) =>{
-            let arrNew = [...arr]
-            //用Math.random()函数生成0~1之间的随机数与0.5比较，返回-1或1
-            const randomsort = function (a, b) {
-              return Math.random() > 0.5 ? -1 : 1
-            }
-            // var arr = [1, 2, 3, 4, 5];
-            return [...arrNew.sort(randomsort)]
-          }
+                    var edges = data.links;
+                    edges = Array.from(edges, e => {
+                        e.target = e.target.toString();
+                        e.source = e.source.toString();
+                        return e;
+                    });
+                    // edges= Array.from(edges,e=>{
+                    //   // if(e.targetName=='AR') console.log(e)
+                    //   if(_TAGS_EXCLUDE.includes(e.targetName))return;
+                    //   if(_TAGS_EXCLUDE.includes(e.sourceName))return;
+                    //   return e;
+                    // }).filter(res=>res);
 
-        console.log(nodes,edges)
+                    //         nodes=[{
+                    //     "name": "mocha",
+                    //     "value": 89055,
+                    //     "emphasis": {
+                    //         "label": {
+                    //             "show": true
+                    //         }
+                    //     },
+                    //     "label": {
+                    //         "show": true
+                    //     }
+                    // }]
+                    //   edges=[{source:0,target:188}]
 
-        
+                    // 打乱
+                    const shuffle = (arr) => {
+                        let arrNew = [...arr]
+                            //用Math.random()函数生成0~1之间的随机数与0.5比较，返回-1或1
+                        const randomsort = function(a, b) {
+                                return Math.random() > 0.5 ? -1 : 1
+                            }
+                            // var arr = [1, 2, 3, 4, 5];
+                        return [...arrNew.sort(randomsort)]
+                    }
 
-        option={
-          backgroundColor: '#000',
-          series: [
-            {
-              color: shuffle([
-                'rgb(203,239,15)',
-                'rgb(73,15,239)',
-                'rgb(15,217,239)',
-                'rgb(30,15,239)',
-                'rgb(15,174,239)',
-                'rgb(116,239,15)',
-                'rgb(239,15,58)',
-                'rgb(15,239,174)',
-                'rgb(239,102,15)',
-                'rgb(239,15,15)',
-                'rgb(15,44,239)',
-                'rgb(239,145,15)',
-                'rgb(30,239,15)',
-                'rgb(239,188,15)',
-                'rgb(159,239,15)',
-                'rgb(159,15,239)',
-                'rgb(15,239,44)',
-                'rgb(15,239,87)',
-                'rgb(15,239,217)',
-                'rgb(203,15,239)',
-                'rgb(239,15,188)',
-                'rgb(239,15,102)',
-                'rgb(239,58,15)',
-                'rgb(239,15,145)',
-                'rgb(116,15,239)',
-                'rgb(15,131,239)',
-                'rgb(73,239,15)',
-                'rgb(15,239,131)',
-                'rgb(15,87,239)',
-                'rgb(239,15,231)'
-              ]),
-              type: 'graphGL',
-              nodes: nodes,
-              edges: edges,
-              modularity: {
-                resolution: 2,
-                sort: true
-              },
-              lineStyle: {
-                color: 'rgba(255,255,255,1)',
-                opacity: 0.05
-              },
-              itemStyle: {
-                opacity: 1
-                // borderColor: '#fff',
-                // borderWidth: 1
-              },
-              focusNodeAdjacency: false,
-              focusNodeAdjacencyOn: 'click',
-              symbolSize: function (value) {
-                return Math.max(Math.sqrt(value),12);
-              },
-              label: {
-                color: '#fff'
-              },
-              emphasis: {
-                label: {
-                  show: false
-                },
-                lineStyle: {
-                  opacity: 0.5,
-                  width: 4
-                }
-              },
-              forceAtlas2: {
-                steps: 15,
-                stopThreshold: 20,
-                jitterTolerence: 10,
-                edgeWeight: [0.2, 1],
-                gravity: 25,
-                edgeWeightInfluence: 1
-                // preventOverlap: true
-              }
-            }
-          ]
-        };
-        myChart.setOption(option);
+                    console.log(nodes, edges)
 
-        myChart.on('mouseover',param => {
-            console.log(param)
 
-        });
-      
-        myChart.on('click',param=>{
-          console.log('click',param)
-          // alert('click')
-          document.querySelector('#info').innerHTML=`
+
+                    option = {
+                        backgroundColor: '#000',
+                        series: [{
+                            color: shuffle([
+                                'rgb(203,239,15)',
+                                'rgb(73,15,239)',
+                                'rgb(15,217,239)',
+                                'rgb(30,15,239)',
+                                'rgb(15,174,239)',
+                                'rgb(116,239,15)',
+                                'rgb(239,15,58)',
+                                'rgb(15,239,174)',
+                                'rgb(239,102,15)',
+                                'rgb(239,15,15)',
+                                'rgb(15,44,239)',
+                                'rgb(239,145,15)',
+                                'rgb(30,239,15)',
+                                'rgb(239,188,15)',
+                                'rgb(159,239,15)',
+                                'rgb(159,15,239)',
+                                'rgb(15,239,44)',
+                                'rgb(15,239,87)',
+                                'rgb(15,239,217)',
+                                'rgb(203,15,239)',
+                                'rgb(239,15,188)',
+                                'rgb(239,15,102)',
+                                'rgb(239,58,15)',
+                                'rgb(239,15,145)',
+                                'rgb(116,15,239)',
+                                'rgb(15,131,239)',
+                                'rgb(73,239,15)',
+                                'rgb(15,239,131)',
+                                'rgb(15,87,239)',
+                                'rgb(239,15,231)'
+                            ]),
+                            type: 'graphGL',
+                            nodes: nodes,
+                            edges: edges,
+                            modularity: {
+                                resolution: 2,
+                                sort: true
+                            },
+                            lineStyle: {
+                                color: 'rgba(255,255,255,1)',
+                                opacity: 0.05
+                            },
+                            itemStyle: {
+                                opacity: 1
+                                    // borderColor: '#fff',
+                                    // borderWidth: 1
+                            },
+                            focusNodeAdjacency: false,
+                            focusNodeAdjacencyOn: 'click',
+                            symbolSize: function(value) {
+                                return Math.max(Math.sqrt(value), 12);
+                            },
+                            label: {
+                                color: '#fff'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: false
+                                },
+                                lineStyle: {
+                                    opacity: 0.5,
+                                    width: 4
+                                }
+                            },
+                            forceAtlas2: {
+                                steps: 15,
+                                stopThreshold: 20,
+                                jitterTolerence: 10,
+                                edgeWeight: [0.2, 1],
+                                gravity: 25,
+                                edgeWeightInfluence: 1
+                                    // preventOverlap: true
+                            }
+                        }]
+                    };
+                    myChart.setOption(option);
+
+                    myChart.on('mouseover', param => {
+                        console.log(param)
+
+                    });
+
+                    myChart.on('click', param => {
+                        console.log('click', param)
+                            // alert('click')
+                        document.querySelector('#info').innerHTML = `
           ${param.data.data[13]}`;
-          let imgs=document.querySelectorAll('#info img');
-          Array.from(imgs,im=>im.remove());
-          document.querySelector('.showAll').innerHTML=`<a target='_blank' href='${param.data.data[4]}' style="color:white">👉 展开全部</a>`;
-          // window.open(param.data.url,'_blank')
-        })
+                        let imgs = document.querySelectorAll('#info img');
+                        Array.from(imgs, im => im.remove());
+                        document.querySelector('.showAll').innerHTML = `<a target='_blank' href='${param.data.data[4]}' style="color:white">👉 展开全部</a>`;
+                        // window.open(param.data.url,'_blank')
+                    })
 
 
 
-      });
-    }
-  );
+                });
+            }
+        );
 
-    if (option && typeof option === 'object') {
-      myChart.setOption(option);
-    }
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
 
-    window.addEventListener('resize', myChart.resize);
-  </script>
+        window.addEventListener('resize', myChart.resize);
+    </script>
 </body>
+
 </html>
